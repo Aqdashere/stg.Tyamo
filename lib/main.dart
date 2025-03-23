@@ -24,7 +24,7 @@ class Tyamo extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Tyamo',
+          title: 'Tyamo stg',
           home: Homepage(),
         );
       },
