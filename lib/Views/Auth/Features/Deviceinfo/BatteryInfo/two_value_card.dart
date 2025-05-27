@@ -5,8 +5,10 @@ class TwoValueCard extends StatelessWidget {
   final String text;
   final String value;
   final Widget? subWidget;
+  final Color? clr;
+  final Color? txtclr;
 
-  TwoValueCard({required this.text, required this.value, this.subWidget});
+  TwoValueCard({required this.text, required this.value, this.subWidget, this.clr, this.txtclr});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class TwoValueCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         elevation: 10,
+        color: clr ?? Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +39,7 @@ class TwoValueCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: GoogleFonts.nunito(
                 fontWeight: FontWeight.w900,
-                color: Color(0xFFF57D7C),
+                color: txtclr ?? Color(0xFFF57D7C),
                 fontSize: 18,
               ),
             ),

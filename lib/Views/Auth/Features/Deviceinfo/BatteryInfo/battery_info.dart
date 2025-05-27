@@ -50,7 +50,7 @@ class BatteryInfo extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 40,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -67,17 +67,14 @@ class BatteryInfo extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30,
-            ),
+
             Expanded(
                 child: Container(
-              color: Colors.red,
+                  padding: EdgeInsets.symmetric(vertical: 17),
               child: Row(
                 children: [
                   Expanded(
                     child: Container(
-                      color: Colors.green,
                       child: Column(
                         children: [
                           Expanded(
@@ -95,45 +92,39 @@ class BatteryInfo extends StatelessWidget {
                   ),
                   Expanded(
                       child: Container(
-                    color: Colors.purple,
                         child: Column(
                           children: [
-                            Expanded(
-                              flex: 2,
-                              child: TwoValueCard(
-                                text: "Charging Percentage",
-                                value: "N/A",
-                                subWidget: SleekCircularSlider(
-                                  min: 0,
-                                  max: 100,
-                                  appearance: CircularSliderAppearance(
-                                    customColors: CustomSliderColors(
-                                      progressBarColor: Color(0xFFF57D7C)
-                                    ),
-                                    infoProperties: InfoProperties(
-                                      mainLabelStyle: GoogleFonts.nunito(
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    size: 100,
-                                    customWidths: CustomSliderWidths(
-                                      progressBarWidth: 10,
+                            TwoValueCard(
+                              text: "Charging Percentage",
+                              value: "N/A",
+                              subWidget: SleekCircularSlider(
+                                min: 0,
+                                max: 100,
+                                appearance: CircularSliderAppearance(
+                                  customColors: CustomSliderColors(
+                                    progressBarColor: Color(0xFFF57D7C)
+                                  ),
+                                  infoProperties: InfoProperties(
+                                    mainLabelStyle: GoogleFonts.nunito(
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  initialValue: 50,
+                                  size: 100,
+                                  customWidths: CustomSliderWidths(
+                                    progressBarWidth: 10,
+                                  ),
                                 ),
+                                initialValue: 50,
                               ),
                             ),
-                            Expanded(
-                                child: TwoValueCard(
-                                    text: 'Temperature', value: ""
-                                    "35.0")),
+                            TwoValueCard(
+                                text: 'Temperature', value: ""
+                                "35.0"),
                           ],
                         ),
                   )),
                   Expanded(
                       child: Container(
-                    color: Colors.yellow,
                         child: Column(
                           children: [
                             Expanded(child: TwoValueCard(text: "Battery Health", value: "Good",),),
@@ -146,8 +137,100 @@ class BatteryInfo extends StatelessWidget {
             )),
             Expanded(
                 child: Container(
-              color: Colors.cyan,
-            ))
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(50),
+                      topLeft: Radius.circular(50),
+                    )
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: TwoValueCard(
+                                            text: "Status",
+                                            value: "Discharge",
+                                            clr: Color(0xfff57D7C),
+                                            textclr: Colors.white,
+                                          ),
+                                        ),
+                                        Expanded(
+                                            child: TwoValueCard(
+                                                clr: Color(0xfff57D7C),
+                                                textclr: Colors.white,
+                                                text: 'Charging Type', value: "-"))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Container(
+                                      child: Column(
+                                        children: [
+                                          TwoValueCard(
+                                            clr: Color(0xfff57D7C),
+                                            textclr: Colors.white,
+                                            text: "Charging Percentage",
+                                            value: "N/A",
+
+                                            subWidget: SleekCircularSlider(
+                                              min: 0,
+                                              max: 100,
+                                              appearance: CircularSliderAppearance(
+                                                customColors: CustomSliderColors(
+                                                    progressBarColor: Colors.white,
+                                                ),
+                                                infoProperties: InfoProperties(
+                                                  mainLabelStyle: GoogleFonts.nunito(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                size: 100,
+                                                customWidths: CustomSliderWidths(
+                                                  progressBarWidth: 10,
+                                                ),
+                                              ),
+                                              initialValue: 50,
+                                            ),
+                                          ),
+                                          TwoValueCard(
+                                              clr: Color(0xfff57D7C),
+                                              textclr: Colors.white,
+                                              text: 'Temperature', value: ""
+                                              "35.0"),
+                                        ],
+                                      ),
+                                    )),
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      children: [
+                                        Expanded(child: TwoValueCard(clr: Color(0xfff57D7C), textclr: Colors.white, text: "Battery Health", value: "Good",),),
+                                        Expanded(child: TwoValueCard(clr: Color(0xfff57D7C), textclr: Colors.white, text: "Battery \nTechnology", value: "Li-Poly"))
+                                      ],
+                                    ),
+                                  ),),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+
+
+            ),),
           ],
         ),
       ),
