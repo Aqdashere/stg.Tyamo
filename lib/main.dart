@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tyamo/Views/Auth/Features/Deviceinfo/BatteryInfo/battery_info.dart';
 import 'package:tyamo/Views/Auth/Features/Deviceinfo/UserStatus/user_status.dart';
 import 'package:tyamo/Views/Auth/Features/Deviceinfo/device_info.dart';
 import 'package:tyamo/Views/Auth/login.dart';
@@ -28,7 +29,7 @@ class Tyamo extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Tyamo App',
-          home: Homepage(),
+          home: BatteryInfo(),
         );
       },
     );
