@@ -50,7 +50,7 @@ class BatteryInfo extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -67,10 +67,9 @@ class BatteryInfo extends StatelessWidget {
                 ),
               ),
             ),
-
             Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 17),
+                  padding: EdgeInsets.symmetric(vertical: 172),
               child: Row(
                 children: [
                   Expanded(
