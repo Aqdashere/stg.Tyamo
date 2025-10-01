@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
 import '../two_value_card.dart';
 
 class BatteryInfo extends StatelessWidget {
