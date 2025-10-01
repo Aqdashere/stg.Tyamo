@@ -5,7 +5,6 @@ import '../two_value_card.dart';
 
 class BatteryInfo extends StatelessWidget {
   const BatteryInfo({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
