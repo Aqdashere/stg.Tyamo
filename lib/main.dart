@@ -21,7 +21,7 @@ class Tyamo extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Tyamo App', //Git 10,10,2025
-          home: const Dashboard(),
+          home: Dashboard(),
         );
       },
     );
