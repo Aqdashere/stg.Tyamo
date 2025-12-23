@@ -1,32 +1,50 @@
-import 'dart:async';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:tyamo/Controller/UserController/user_controller.dart';
+import 'package:tyamo/Interfaces/Auth/login_services.dart';
 import 'package:tyamo/Views/Auth/forgot_password.dart';
 import 'package:tyamo/Views/Auth/register.dart';
-import 'package:tyamo/Views/Profile/profile_setup.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_heading.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_text_field.dart';
 import 'package:page_transition/page_transition.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final RoundedLoadingButtonController _loginBtnController =
       RoundedLoadingButtonController();
 
-  Login({super.key});
+  late final LoginServices loginServices;
+
+  @override
+  void initState() {
+    super.initState();
+    loginServices = LoginServices();
+  }
+
+  @override
+  void dispose() {
+    loginServices.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
             'Tyamo',
             style: GoogleFonts.poppins(
                 fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          backgroundColor: Color.fromARGB(255, 2, 7, 80),
+          backgroundColor: const Color.fromARGB(255, 2, 7, 80),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -37,33 +55,37 @@ class Login extends StatelessWidget {
                 AuthHeading(
                   mainText: 'Sign in to Tyamo',
                   subText: 'To connect with \nyour partner',
-                  fontSize: 18.sp,
+                  fontSize: 18,
                   logo: "assets/images/logo.jpg",
-                  logoHeight: 30.sp,
+                  logoHeight: 30,
                 ), //Heading Text
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 AuthTextField(
+                    key: const ValueKey('login_email_field'),
+                    controller: loginServices.emailController,
                     keyboardType: TextInputType.emailAddress,
-                    labelSize: 15.sp,
+                    labelSize: 15,
                     labelText: 'Email',
                     obscureText: false,
                     icon: Icons.alternate_email,
-                    iconSize: 16.sp,
-                    fontSize: 15.sp), //Email Textbox
-                SizedBox(
+                    iconSize: 16,
+                    fontSize: 15), //Email Textbox
+                const SizedBox(
                   height: 20,
                 ),
                 AuthTextField(
+                    key: const ValueKey('login_password_field'),
+                    controller: loginServices.passController,
                     keyboardType: TextInputType.visiblePassword,
-                    labelSize: 15.sp,
+                    labelSize: 15,
                     labelText: 'Password',
                     obscureText: true,
                     icon: Icons.password,
-                    iconSize: 16.sp,
-                    fontSize: 15.sp),
-                SizedBox(
+                    iconSize: 16,
+                    fontSize: 15),
+                const SizedBox(
                   height: 20,
                 ),
                 Hero(
@@ -71,30 +93,34 @@ class Login extends StatelessWidget {
                   child: RoundedLoadingButton(
                     width: 500,
                     borderRadius: 10,
-                    color: Color(0xff00C1AA),
+                    color: const Color(0xff00C1AA),
                     controller: _loginBtnController,
                     onPressed: () {
-                      Timer(Duration(seconds: 2), (){
-                        _loginBtnController.success();
-                        Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: ProfileSetup()),);
-                      });
+                      UserController().loginUser(
+                          loginServices.emailController.text,
+                          loginServices.passController.text);
                     },
                     child: Text('Login',
                         style: GoogleFonts.poppins(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
-                          fontSize: 15.sp,
+                          fontSize: 15,
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: ForgotPassword()),);
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: ForgotPassword()),
+                      );
                     },
                     child: Text(
                       "Forgot Password?",
@@ -106,7 +132,7 @@ class Login extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Row(
@@ -116,20 +142,25 @@ class Login extends StatelessWidget {
                       "Don't have an account? ",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
-                        fontSize: 13.sp,
+                        fontSize: 13,
                         color: const Color(0xff5A5B5B),
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade, child: Register(),),);
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const Register()),
+                        );
                       },
                       child: Text(
                         "Sign Up",
                         style: GoogleFonts.poppins(
                             color: const Color(0xff2F76EA),
                             fontWeight: FontWeight.bold,
-                            fontSize: 14.sp),
+                            fontSize: 14),
                       ),
                     ), // Text
                   ],

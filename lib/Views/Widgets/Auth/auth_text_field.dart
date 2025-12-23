@@ -9,6 +9,7 @@ class AuthTextField extends StatelessWidget {
   final double labelSize;
   final double fontSize;
   final double iconSize;
+  final TextEditingController controller;
 
   const AuthTextField({
     super.key,
@@ -19,11 +20,13 @@ class AuthTextField extends StatelessWidget {
     required this.icon,
     required this.iconSize,
     required this.fontSize,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       textAlign: TextAlign.start,
       textInputAction: TextInputAction.none,
       style: GoogleFonts.poppins(

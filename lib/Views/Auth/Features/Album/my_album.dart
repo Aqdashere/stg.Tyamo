@@ -5,6 +5,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:tyamo/Views/Auth/Features/Album/album_main.dart';
+import 'package:tyamo/Views/Auth/Features/Album/album_post.dart';
 import 'package:tyamo/Views/Homepage/homepage.dart';
 
 class MyAlbum extends StatelessWidget {
@@ -51,7 +54,9 @@ class MyAlbum extends StatelessWidget {
                       FocusedMenuItem(title: Text("Favorite"),trailingIcon: Icon(Icons.favorite_border) ,onPressed: (){}),
                       FocusedMenuItem(title: Text("Delete",style: TextStyle(color: Colors.redAccent),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,) ,onPressed: (){}),
                     ],
-                    onPressed: (){},
+                    onPressed: (){
+
+                    },
                     child: Card(
                         child: Column(
                           children: <Widget>[
@@ -145,7 +150,10 @@ class GalleryHeader extends StatelessWidget {
                     );
                   },
                   cacheImage: true,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,PageTransition(type: PageTransitionType.fade,child: AlbumPost()));
+                  },
+                  child: Hero(tag: "https://imagekit.io/blog/content/images/2019/12/image-optimization.jpg", child: Image.network("https://imagekit.io/blog/content/images/2019/12/image-optimization.jpg",fit: BoxFit.cover,)),
                   animateFromOldImageOnUrlChange: true,
                   placeHolder: (context, url) {
                     return const Center(

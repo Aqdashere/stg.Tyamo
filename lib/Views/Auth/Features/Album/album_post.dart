@@ -72,12 +72,18 @@ class AlbumPost extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset(
-                                  'assets/images/bg.jpg',
-                                  height: 250,
-                                )),
+                            child: GestureDetector(
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                    'assets/images/bg.jpg',
+                                    height: 250,
+                                  ),
+                              ),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AlbumPost()));
+                              },
+                            ),
                           ),
                           SizedBox(
                             width: 250,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:tyamo/Interfaces/Auth/forgot_pass_services.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_heading.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_text_field.dart';
 
@@ -9,7 +10,7 @@ class ForgotPassword extends StatelessWidget {
   final RoundedLoadingButtonController _forgotPassBtnController =
       RoundedLoadingButtonController();
 
-  ForgotPassword({super.key});
+  ForgotPassServices forgotPassServices = ForgotPassServices();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,7 @@ class ForgotPassword extends StatelessWidget {
                 height: 25,
               ),
               AuthTextField(
+                controller: forgotPassServices.emailController,
                   keyboardType: TextInputType.emailAddress,
                   labelSize: 15,
                   labelText: 'Email',

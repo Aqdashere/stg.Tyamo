@@ -69,6 +69,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: AuthTextField(
+                  controller: TextEditingController(),
                     keyboardType: TextInputType.text,
                     labelSize: 15,
                     labelText: 'Your Name',
@@ -83,6 +84,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: AuthTextField(
+                  controller: TextEditingController(), //Fix later
                     keyboardType: TextInputType.text,
                     labelSize: 15,
                     labelText: 'Your Username',

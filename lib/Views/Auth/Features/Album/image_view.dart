@@ -1,0 +1,17 @@
+import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
+
+class ImageView extends StatelessWidget {
+  const ImageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: PhotoView(
+        heroAttributes: const PhotoViewHeroAttributes(tag: 'image'),
+        imageProvider: const NetworkImage(""),
+      ),
+
+    );
+  }
+}
