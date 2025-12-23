@@ -63,5 +63,32 @@ Future<bool> signout() async {
 
 }
 
+Future<MyUser> checkUserSigninInfo() async{
+
+    try{
+      MyUser myUser = MyUser();
+      myUser.isLoadingStartupData = true;
+      currentUser = myUser;
+      auth.authStateChanges().listen((event) async {
+        if(event?.uid == null){
+          myUser.uid == null;
+          myUser.isLoadingStartupData= false;
+          currentUser = myUser;
+        } else {
+          myUser.uid = event?.uid;
+          myUser = await UserDatabase().getUserInfobyId(auth.currentUser!.uid);
+          myUser.isLoadingStartupData=false;
+          currentUser = myUser;
+
+        }
+      });
+      return myUser;
+    } catch(e){
+      print(e);
+      return null!;
+    }
+
+}
+
 }
 
