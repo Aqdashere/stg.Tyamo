@@ -12,6 +12,7 @@ class MyUser {
   String? chatRoomId;
   String? gender;
   String? referralCode;
+  bool? isLoadingStartupData;
   Timestamp? accountCreated;
 
   MyUser( //constructor
