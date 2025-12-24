@@ -1,11 +1,16 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:tyamo/Views/Invitation/invite_friend.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_text_field.dart';
+import 'package:image/image.dart' as Img;
+import 'package:uuid/uuid.dart';
 
 class ProfileSetup extends StatefulWidget {
   const ProfileSetup({super.key});
@@ -19,6 +24,43 @@ class _ProfileSetupState extends State<ProfileSetup> {
       RoundedLoadingButtonController();
 
   bool ismale = true;
+  File? file;
+  bool isUploading = false;
+  ImagePicker img = ImagePicker();
+  String postId = Uuid().v4();
+
+
+  handleChooseFromGalley () async{
+    var getImage = await img.pickImage(source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1920);
+    File io = File(getImage!.path);
+    setState(() {
+      file = io;
+    });
+
+    if(file != null) {
+      uploadToStorage();
+    }
+  }
+
+  uploadToStorage() async {
+  setState(() {
+    isUploading = true;
+  });
+
+  await compressImage();
+
+  }
+
+  compressImage () async{
+    final tempDir = await getTemporaryDirectory();
+    final path = tempDir.path;
+    Img.Image? imageFile = Img.decodeImage(file!.readAsBytesSync());
+    final compressedImageFile = File("$path/image_$postId.jpg")..writeAsBytesSync(Img.encodeJpg(imageFile!, quality: 85));
+    setState(() {
+      file = compressedImageFile;
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +95,9 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Center(
                 child: CircularProfileAvatar(
                   '',
+                  onTap: (){
+
+                  },
                   backgroundColor: Colors.cyan,
                   initialsText: Text(
                     '+',

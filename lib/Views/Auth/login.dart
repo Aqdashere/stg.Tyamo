@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:tyamo/Controller/UserController/user_controller.dart';
 import 'package:tyamo/Interfaces/Auth/login_services.dart';
@@ -95,10 +98,17 @@ class _LoginState extends State<Login> {
                     borderRadius: 10,
                     color: const Color(0xff00C1AA),
                     controller: _loginBtnController,
-                    onPressed: () {
-                      UserController().loginUser(
+                    onPressed: () async {
+                      bool success = await Provider.of<UserController>(context, listen: false).loginUser(
                           loginServices.emailController.text,
                           loginServices.passController.text);
+                      if (!success) {
+                        _loginBtnController.error();
+                        // Optionally reset the button
+                        Timer(Duration(seconds: 2), () {
+                          _loginBtnController.reset();
+                        });
+                      }
                     },
                     child: Text('Login',
                         style: GoogleFonts.poppins(
