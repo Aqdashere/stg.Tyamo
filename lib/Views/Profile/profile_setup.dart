@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -29,37 +30,45 @@ class _ProfileSetupState extends State<ProfileSetup> {
   ImagePicker img = ImagePicker();
   String postId = Uuid().v4();
 
-
-  handleChooseFromGalley () async{
-    var getImage = await img.pickImage(source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1920);
+  handleChooseFromGalley() async {
+    var getImage = await img.pickImage(
+        source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1920);
     File io = File(getImage!.path);
     setState(() {
       file = io;
     });
 
-    if(file != null) {
+    if (file != null) {
       uploadToStorage();
     }
   }
 
   uploadToStorage() async {
-  setState(() {
-    isUploading = true;
-  });
+    setState(() {
+      isUploading = true;
+    });
 
-  await compressImage();
+    await compressImage();
 
+    String mediaUrl = await uploadImage();
   }
 
-  compressImage () async{
+  uploadImage() {
+    UploadTask uploadTask = FirebaseStorage.instance
+        .ref()
+        .child("profilePictures/$postId.jpg")
+        .putFile(file!);
+  }
+
+  compressImage() async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
     Img.Image? imageFile = Img.decodeImage(file!.readAsBytesSync());
-    final compressedImageFile = File("$path/image_$postId.jpg")..writeAsBytesSync(Img.encodeJpg(imageFile!, quality: 85));
+    final compressedImageFile = File("$path/image_$postId.jpg")
+      ..writeAsBytesSync(Img.encodeJpg(imageFile!, quality: 85));
     setState(() {
       file = compressedImageFile;
     });
-
   }
 
   @override
@@ -95,9 +104,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Center(
                 child: CircularProfileAvatar(
                   '',
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                   backgroundColor: Colors.cyan,
                   initialsText: Text(
                     '+',
@@ -114,7 +121,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: AuthTextField(
-                  controller: TextEditingController(),
+                    controller: TextEditingController(),
                     keyboardType: TextInputType.text,
                     labelSize: 15,
                     labelText: 'Your Name',
@@ -129,7 +136,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: AuthTextField(
-                  controller: TextEditingController(), //Fix later
+                    controller: TextEditingController(), //Fix later
                     keyboardType: TextInputType.text,
                     labelSize: 15,
                     labelText: 'Your Username',
