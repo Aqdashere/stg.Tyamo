@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
@@ -7,7 +8,10 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:tyamo/Controller/UserController/user_controller.dart';
+import 'package:tyamo/Model/my_user.dart';
 import 'package:tyamo/Views/Invitation/invite_friend.dart';
 import 'package:tyamo/Views/Widgets/Auth/auth_text_field.dart';
 import 'package:image/image.dart' as Img;
@@ -43,6 +47,10 @@ class _ProfileSetupState extends State<ProfileSetup> {
     }
   }
 
+  updateAvatarInFirestore({String? mediaUrl, String? uid}) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({"avatarUrl": mediaUrl});
+  }
+
   uploadToStorage() async {
     setState(() {
       isUploading = true;
@@ -50,17 +58,21 @@ class _ProfileSetupState extends State<ProfileSetup> {
 
     await compressImage();
 
-    String mediaUrl = await uploadImage();
+    String? mediaUrl = await uploadImage();
+    if (mediaUrl != null) {
+      await updateAvatarInFirestore(mediaUrl: mediaUrl, uid: myUser!.uid);
+    }
   }
 
-  uploadImage() {
+  Future<String?> uploadImage() async {
     UploadTask uploadTask = FirebaseStorage.instance
         .ref()
         .child("profilePictures/$postId.jpg")
         .putFile(file!);
-    uploadTask.then((p0) {
-      p0.ref.getDownloadURL();
-    });
+
+    String? downloadUrl;
+
+    return uploadTask.then((p0)=> p0.ref.getDownloadURL());
   }
 
   compressImage() async {
@@ -74,8 +86,17 @@ class _ProfileSetupState extends State<ProfileSetup> {
     });
   }
 
+  MyUser? myUser;
+  UserController? _currentUser;
+
   @override
   Widget build(BuildContext context) {
+    _currentUser = Provider.of<UserController>(context, listen: false);
+
+    setState(() {
+      myUser = _currentUser!.getCurrentUser;
+    });
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

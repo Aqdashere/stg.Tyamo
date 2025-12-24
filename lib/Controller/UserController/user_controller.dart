@@ -8,6 +8,9 @@ import 'package:tyamo/Service/user_database.dart';
 class UserController with ChangeNotifier { //provider
   MyUser currentUser = MyUser();
 
+  MyUser get getCurrentUser => currentUser;
+
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   UserController() {
