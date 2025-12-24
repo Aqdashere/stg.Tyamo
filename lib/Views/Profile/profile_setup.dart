@@ -34,6 +34,7 @@ class _ProfileSetupState extends State<ProfileSetup> {
   ImagePicker img = ImagePicker();
   String postId = Uuid().v4();
 
+
   handleChooseFromGalley() async {
     var getImage = await img.pickImage(
         source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1920);
