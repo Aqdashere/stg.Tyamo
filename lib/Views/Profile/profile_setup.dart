@@ -58,6 +58,9 @@ class _ProfileSetupState extends State<ProfileSetup> {
         .ref()
         .child("profilePictures/$postId.jpg")
         .putFile(file!);
+    uploadTask.then((p0) {
+      p0.ref.getDownloadURL();
+    });
   }
 
   compressImage() async {
